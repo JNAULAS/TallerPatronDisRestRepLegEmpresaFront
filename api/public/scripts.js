@@ -1,5 +1,9 @@
 
 const urlServer = 'http://localhost:3000/'
+// Se agrega escucha de socket
+var socket = io();
+socket.on('mensaje', (data)=>console.log(data))
+
 // Se crea api generica para cunsumir servicios rest
 async function getApi(paramMethod, paramUrl, paramBody) {
     console.log('URL ACCESO API')

@@ -13,6 +13,7 @@ npm install cors
 ### Paquetes para 
 npm install http
 npm install socket.io
+npm install ws
 
 
 ### Comandos para ejecutar el API.
