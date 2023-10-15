@@ -35,9 +35,25 @@ async function getListCompany() {
         listItemFront.add(option)
     });
 }
-// Funcion para agregar Item Seleccionado a lista
+// funtion para agregar Item Seleccionado a lista
+function addDatosLista() {
+    const listaEmpresas = document.getElementById("listaEmpresas");
+    const itemSelect = document.getElementById("aquiidLista");
 
+    const selectedOption = listaEmpresas.options[listaEmpresas.selectedIndex];
+    const value = selectedOption.value;
+    const text = selectedOption.text;
+
+    if (value) {
+        const listItem = document.createElement("li");
+        listItem.textContent = text;
+        itemSelect.appendChild(listItem);
+    }
+}
+
+// fiuntion for save legalRepresentative
 async function saveRepresentante() {
+    let path = 'representanteLegal'
     // Get value input Representate Legal
     const paramRuc = document.getElementById('inputRuc').value
     const paramCedula = document.getElementById('inputCedula').value
@@ -46,7 +62,7 @@ async function saveRepresentante() {
     const paramEmail = document.getElementById('inputEmail').value
     const paramDomicilio = document.getElementById('inputDomicilio').value
     const paramTelefono = document.getElementById('inputTelefono').value
-
+    var listItemFront = document.getElementById("listaEmpresas").value
     // Construimos Json para persistir
     const param = {
         ruc: paramRuc,
@@ -55,8 +71,22 @@ async function saveRepresentante() {
         apellido: paramApellido,
         email: paramEmail,
         domicilio: paramDomicilio,
-        telefono: paramTelefono
+        telefono: paramTelefono,
+        empresa:[{empresa:listItemFront}]
     }
+    /* 
+    var ulElement = document.getElementById("aquiidLista")
+    var listItem = ulElement.getElementsByTagName("li")
+    console.log('Rerrorre ul')
+    console.log(listItem)
+    listItem.HTMLCollection.forEach(listItem => {
+        console.log('Rerrorre ul')
+        console.log(listItem)
+    });
+    */
+    const dataRetun = await getApi('POST', `${urlServer}${path}`,param);
+    console.log('retorno registro')
+    console.log(dataRetun)
 }
 
 // Ejecuciones automaticas
