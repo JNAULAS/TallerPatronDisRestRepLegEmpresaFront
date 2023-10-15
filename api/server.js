@@ -14,6 +14,7 @@ db( config.DB_URL )
 app.use(cors());
 app.use( body_parser.json() )
 app.use( body_parser.urlencoded({extended: false}) )
+routes( app )
 
 // se agrega import para trabajar con Patron de Diseño de APIS para eset caso websocket
 const server = require('http').Server(app)
@@ -22,8 +23,16 @@ const io = require('socket.io')(server)
 app.use('/', express.static('public'))
 
 io.on('connection', function(socket){
-    console.log('Nuevo cliente conectado.')
-    socket.emit('mensaje', 'Bienvenido')
+    // Escuchamos los mensajes entrantes
+    socket.on("mensaje", function incoming(data){
+       // Iteramos todos los clientes que se encuentren conectados
+       wss.clients.forEach(function each(client) {
+        if (client.readyState === WebSocket.OPEN) {
+            // Enviamos la información recibida
+            client.send(data.toString());
+        }
+    });
+    })
 })
 // Ejecuta interbalo para notificar
 let contador = 1
@@ -32,9 +41,6 @@ setInterval(function(){
     contador++
 }, 3000)
 
-
-
-routes( app )
 // Configuramos escucha del servidor cuando lleguen las peticiones
 server.listen(config.PORT, function() {
     console.log(`La aplicacion esta escuchando en http://localhost:${config.PORT}`)
