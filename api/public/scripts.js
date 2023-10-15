@@ -1,6 +1,8 @@
 const urlServer = 'http://localhost:3000/'
 // Se crea api generica para cunsumir servicios rest
 async function getApi(paramMethod, paramUrl, paramBody) {
+    console.log('URL ACCESO API')
+    console.log(paramUrl)
     let data
     const requestOptions = {
         method: paramMethod,//'POST',
@@ -20,12 +22,16 @@ async function getApi(paramMethod, paramUrl, paramBody) {
 }
 
 async function getListCompany() {
+    let listCompanyFront=[]
     let path = 'empresa'
-    const dataRetun = await getApi('POST', `${urlServer}${path}`, {  });
-    console.log('Datos de retorno de empresa')
-    console.log(dataRetun.object)
+    const dataRetun = await getApi('GET', `${urlServer}${path}`);
+    console.log(JSON.stringify(dataRetun))
+    dataRetun.body.forEach(element => {
+        console.log(JSON.stringify(element))
+        listCompanyFront.push(element)
+    });
 
-    alert(JSON.stringify(dataRetun))
+    alert(JSON.stringify(listCompanyFront[1]))
 }
 
 async function saveRepresentante() {
