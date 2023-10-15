@@ -93,26 +93,22 @@ async function saveRepresentante() {
     }
 }
 
-// Ejecuciones automaticas
-document.addEventListener("DOMContentLoaded", function () {
-    getListCompany();
-});
-function init() {
-    // Conexión con el servidor de websocket
-    wsConnect();
-}
 // Se agrega escucha de socket
 function wsConnect() {
-  const socket = new WebSocket('ws://localhost:5500');
+    //Agregamos url
+    const socket = new WebSocket('ws://localhost:5500');
+    console.log(socket)
+    socket.on('mensaje', (data)=>console.log(data))
+    /* Verificamos conexion Ok
     socket.addEventListener('open', (event) => {
         // Connection opened successfully
         console.log('WebSocket connection opened.');
-      });
-      
-      socket.addEventListener('error', (event) => {
+    });
+
+    socket.addEventListener('error', (event) => {
         // Handle connection errors
         console.error('WebSocket connection error:', event);
-      });
+    });*/
     socket.onopen = function (e) {
         onOpen(e)
     }
@@ -125,6 +121,7 @@ function onOpen(evt) {
     // Habilitamos el botón Enviar
     //document.getElementById("enviar").disabled = false;
     // Enviamos el saludo inicial al servidor
+    console.log('Ingresa envio ce mensaje a servidor')
     doSend("Saludo Srvidor");
 }
 // Se invoca cuando se recibe un mensaje del servidor
@@ -138,5 +135,15 @@ function doSend(message) {
     console.log("Enviando: " + message);
     websocket.send(message);
 }
-    // Se invoca la función init cuando la página termina de cargarse
-    window.addEventListener("load", init, false);
+function init() {
+    // Conexión con el servidor de websocket
+    wsConnect();
+}
+
+
+// Ejecuciones automaticas
+document.addEventListener("DOMContentLoaded", function () {
+    getListCompany();
+});
+// Se invoca la función init cuando la página termina de cargarse
+window.addEventListener("load", init(), false);
