@@ -1,3 +1,4 @@
+
 const urlServer = 'http://localhost:3000/'
 // Se crea api generica para cunsumir servicios rest
 async function getApi(paramMethod, paramUrl, paramBody) {
@@ -20,19 +21,21 @@ async function getApi(paramMethod, paramUrl, paramBody) {
     data = await res.json()
     return data
 }
-
 async function getListCompany() {
-    let listCompanyFront=[]
     let path = 'empresa'
+    var listItemFront = document.getElementById("listaEmpresas")
+    // Consume Api
     const dataRetun = await getApi('GET', `${urlServer}${path}`);
     console.log(JSON.stringify(dataRetun))
+    // Recorre lista que retorna el servicio
     dataRetun.body.forEach(element => {
-        console.log(JSON.stringify(element))
-        listCompanyFront.push(element)
+        var option = document.createElement("option");
+        option.text = element.nombre
+        option.value = element._id
+        listItemFront.add(option)
     });
-
-    alert(JSON.stringify(listCompanyFront[1]))
 }
+// Funcion para agregar Item Seleccionado a lista
 
 async function saveRepresentante() {
     // Get value input Representate Legal
@@ -55,3 +58,8 @@ async function saveRepresentante() {
         telefono: paramTelefono
     }
 }
+
+// Ejecuciones automaticas
+document.addEventListener("DOMContentLoaded", function () {
+    getListCompany();
+});
