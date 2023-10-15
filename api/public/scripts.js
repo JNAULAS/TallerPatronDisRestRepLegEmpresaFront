@@ -85,8 +85,12 @@ async function saveRepresentante() {
     });
     */
     const dataRetun = await getApi('POST', `${urlServer}${path}`,param);
-    console.log('retorno registro')
-    console.log(dataRetun)
+
+    if(!dataRetun.erorr){
+        alert(`Representante Legal registrado con exito para la empresa: ${dataRetun.body.nombre +' ' +dataRetun.body.apellido}`)
+    } else {
+       alert(dataRetun.erorr)
+    }
 }
 
 // Ejecuciones automaticas
