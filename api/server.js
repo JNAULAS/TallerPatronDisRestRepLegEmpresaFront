@@ -16,39 +16,43 @@ app.use(cors());
 app.use(body_parser.json())
 app.use(body_parser.urlencoded({ extended: false }))
 routes(app)
+/***************************** INICIO SECCION CODIGO PARA MANEJO DE SOCKETS *************************************/
+const path = require("path")
+const server = require('http').Server(app);
+const websocket = require('socket.io')(server);
+app.use(express.json)
+app.use(express.static(path.join(__dirname, './public')));
 
-// se agrega import para trabajar con Patron de Diseño de APIS para eset caso websocket
-const server = require('http').Server(app)
-const websocket = require('socket.io')(server)
-//  Conexion para que socker io pueda acceder al front
-//app.use('/', express.static('/public/pages'))
-app.use('/', express.static(__dirname + 'public/pages'))
+// Intanciamos objeto y realizamos control de conexiones
+/* const instWebSocket = new WebSocket({
+    httpServer: server,
+    autoAcceptConnections: false // Este para que no se establezca la conexión directa si no q lo valide primero
+}) */
 
-websocket.on('connection', function (socket) {
-    console.log('Accede a conection on')
-    console.log(socket)
-    // Escuchamos los mensajes entrantes
-    socket.on("mensaje", function incoming(data) {
-        //console.log("Mensaje recibido: " + message.utf8Data);
-        //connection.sendUTF("Recibido: " + message.utf8Data);
-        /* Iteramos todos los clientes que se encuentren conectados
-        data.clients.forEach(function each(client) {
-         if (client.readyState === WebSocket.OPEN) {
-             // Enviamos la información recibida
-             client.send(data.toString());
-         }
-     });*/
-     data.emit('mensaje','Buenos dias')
+// Codigo que permite atender peticiones  reques / callback 
+websocket.on('request', function (request) {
+    console.log("Ingreso al request");
+    // Si request es aceptada obtiene la conexion
+    const connection = request.accept(null, request.origin);
+    // establecida la conexión recibimso  el mensaje
+    connection.on("message",(message) => {
+        console.log("Mensaje recibido registro en consola: "+message.utf8Data);
+        // Retorna mensaje a cliente
+        connection.sendUTF("Mensaje recibido: "+ message.utf8Data)
+    })
+    connection.on("close", (reasonCode, description) => {
+        console.log("El cliente se desconecto");
     })
 })
-// Ejecuta interbalo para notificar
-let contador = 1
-setInterval(function () {
-    websocket.emit(`mensaje`, `Hola, saludos a todos --> ${contador}`)
-    contador++
-}, 3000)
+/***************************** FIN SECCION CODIGO PARA MANEJO DE SOCKETS *************************************/
 
-// Configuramos escucha del servidor cuando lleguen las peticiones
+
+// Configuracion de Websocket
+/*
+app.listen( config.PORT )
+console.log(`La aplicacion se encuentra arriba en http://localhost:${config.PORT}/`)
+*/
+// Configuramos websocket escucha del servidor cuando lleguen las peticiones
 server.listen(configSocket.PORT, function () {
-    console.log(`La aplicacion esta escuchando en http://localhost:${configSocket.PORT}`)
+    console.log(`La aplicacion esta escuchando en http://localhost:${configSocket.PORT}`);
 })
