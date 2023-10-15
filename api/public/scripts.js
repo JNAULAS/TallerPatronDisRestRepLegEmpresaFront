@@ -103,7 +103,7 @@ function init() {
 }
 // Se agrega escucha de socket
 function wsConnect() {
-  const socket = new WebSocket('ws://localhost:3000');
+  const socket = new WebSocket('ws://localhost:5500');
     socket.addEventListener('open', (event) => {
         // Connection opened successfully
         console.log('WebSocket connection opened.');
@@ -116,13 +116,22 @@ function wsConnect() {
     socket.onopen = function (e) {
         onOpen(e)
     }
+    socket.onmessage = function (evt) {
+        onMessage(evt)
+    };
 }
 // Se ejecuta cuando se establece la conexión Websocket con el servidor
 function onOpen(evt) {
     // Habilitamos el botón Enviar
-    document.getElementById("enviar").disabled = false;
+    //document.getElementById("enviar").disabled = false;
     // Enviamos el saludo inicial al servidor
-    doSend("Hola");
+    doSend("Saludo Srvidor");
+}
+// Se invoca cuando se recibe un mensaje del servidor
+function onMessage(evt) {
+    // Agregamos al textarea el mensaje recibido
+    var area = document.getElementById("idNotification")
+    area.innerHTML += evt.data + "\n";
 }
 // Envía un mensaje al servidor (y se imprime en la consola)
 function doSend(message) {

@@ -24,8 +24,12 @@ const websocket = require('socket.io')(server)
 app.use('/', express.static('public'))
 
 websocket.on('connection', function(socket){
+    console.log('Accede a conection on')
+    console.log(socket)
     // Escuchamos los mensajes entrantes
     socket.on("mensaje", function incoming(data){
+        console.log("Mensaje recibido: " + message.utf8Data);
+        connection.sendUTF("Recibido: " + message.utf8Data);
        // Iteramos todos los clientes que se encuentren conectados
        wss.clients.forEach(function each(client) {
         if (client.readyState === WebSocket.OPEN) {
