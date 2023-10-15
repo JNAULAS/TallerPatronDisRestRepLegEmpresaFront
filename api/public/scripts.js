@@ -1,7 +1,5 @@
 
 const urlServer = 'http://localhost:3000/'
-
-
 // Se crea api generica para cunsumir servicios rest
 async function getApi(paramMethod, paramUrl, paramBody) {
     console.log('URL ACCESO API')
@@ -74,7 +72,7 @@ async function saveRepresentante() {
         email: paramEmail,
         domicilio: paramDomicilio,
         telefono: paramTelefono,
-        empresa:[{empresa:listItemFront}]
+        empresa: [{ empresa: listItemFront }]
     }
     /* 
     var ulElement = document.getElementById("aquiidLista")
@@ -86,12 +84,12 @@ async function saveRepresentante() {
         console.log(listItem)
     });
     */
-    const dataRetun = await getApi('POST', `${urlServer}${path}`,param);
+    const dataRetun = await getApi('POST', `${urlServer}${path}`, param);
 
-    if(!dataRetun.erorr){
-        alert(`Representante Legal registrado con exito para la empresa: ${dataRetun.body.nombre +' ' +dataRetun.body.apellido}`)
+    if (!dataRetun.erorr) {
+        alert(`Representante Legal registrado con exito para la empresa: ${dataRetun.body.nombre + ' ' + dataRetun.body.apellido}`)
     } else {
-       alert(dataRetun.erorr)
+        alert(dataRetun.erorr)
     }
 }
 
@@ -99,7 +97,37 @@ async function saveRepresentante() {
 document.addEventListener("DOMContentLoaded", function () {
     getListCompany();
 });
-
+function init() {
+    // Conexión con el servidor de websocket
+    wsConnect();
+}
 // Se agrega escucha de socket
-//var socket = io();
-//socket.on('mensaje', (data)=>console.log(data))
+function wsConnect() {
+  const socket = new WebSocket('ws://localhost:3000');
+    socket.addEventListener('open', (event) => {
+        // Connection opened successfully
+        console.log('WebSocket connection opened.');
+      });
+      
+      socket.addEventListener('error', (event) => {
+        // Handle connection errors
+        console.error('WebSocket connection error:', event);
+      });
+    socket.onopen = function (e) {
+        onOpen(e)
+    }
+}
+// Se ejecuta cuando se establece la conexión Websocket con el servidor
+function onOpen(evt) {
+    // Habilitamos el botón Enviar
+    document.getElementById("enviar").disabled = false;
+    // Enviamos el saludo inicial al servidor
+    doSend("Hola");
+}
+// Envía un mensaje al servidor (y se imprime en la consola)
+function doSend(message) {
+    console.log("Enviando: " + message);
+    websocket.send(message);
+}
+    // Se invoca la función init cuando la página termina de cargarse
+    window.addEventListener("load", init, false);
