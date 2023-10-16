@@ -13,17 +13,21 @@ const websocket = require('socket.io')(server);
 db(config.DB_URL)
 app.use(body_parser.json())
 app.use(body_parser.urlencoded({ extended: false }))
-routes(app)
+
 /***************************** INICIO SECCION CODIGO PARA MANEJO DE SOCKETS *************************************/
 app.use('/', express.static('public'));
 
 app.use((req, res, next) => {
-    req.io = io;
+    req.io = websocket;
     next();
   });
+  routes(app)
 // Codigo que permite atender peticiones  reques / callback 
 websocket.on('connection', function (socket) {
     console.log('Nuevo cliente conectado.')
+    /*socket.on("messageClient", function(msg) {
+      io.emit("messageClient", msg);
+    });*/
 })
 /***************************** FIN SECCION CODIGO PARA MANEJO DE SOCKETS *************************************/
 // Configuramos websocket escucha del servidor cuando lleguen las peticiones

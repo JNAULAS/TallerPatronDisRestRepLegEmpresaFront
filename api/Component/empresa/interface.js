@@ -11,7 +11,7 @@ const io = require('socket.io')(server)
 routes.post('/', function (req, res) {
     controller.agregarEmpresa(req.body)
         .then((data) => {
-            const mensaje = data.nombre;
+            const mensaje = req.body.nombre;
             req.io.emit('messageClient', mensaje);
             response.success(req, res, data, 201)
         })
