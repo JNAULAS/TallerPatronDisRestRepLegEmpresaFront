@@ -3,42 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="../public/css/style.css" />
-    <!--<script src="/socket.io/socket.io.js"></script> -->
+    <link rel="stylesheet" type="text/css" href="./css/style.css" />
     <script type="text/javascript" src="./scripts.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <title>Admin legal representative</title>
 </head>
 <body>
-    <div class="container text-center" style="align-content: center; width: 600px;">
+    <div class="styleDivForm">
         <h1>Legal representative parameterization</h1>
-        <div class="input-group mb-3" style="align-content: center;">
-            <div mb-3>
-            <input type="text" class="form-control form-control-lg" type="text" placeholder="RUC" id="inputRuc"  value="">
-            <input type="text" class="form-control form-control-lg" type="text" placeholder="CEDULA" id="inputCedula" value="">
-            <input type="text" class="form-control form-control-lg" type="text" placeholder="NOMBRE" id="inputNombre" value="">
-            <input type="text" class="form-control form-control-lg" type="text" placeholder="APELLIDO" id="inputApellido" value="">
-            <input type="text" class="form-control form-control-lg" type="text" placeholder="EMAIL" id="inputEmail" value="">
-            <input type="text" class="form-control form-control-lg" type="text" placeholder="DOMICILIO" id="inputDomicilio" value="">
-            <input type="text" class="form-control form-control-lg" type="text" placeholder="TELEFONO" id="inputTelefono" value="">
-        </div>
-        <div class="input-group mb-3">
-            <select name="" class="form-control form-control-lg" type="text" placeholder="EMPRESAS" id="listaEmpresas"></select>
+        <div class="styleDivInput">
+            <label for="labelRuc">Ruc: </label>
+            <input type="text" id="inputRuc" value="">
+            <br>
+            <label for="labelCedula">Cedula: </label>
+            <input type="text" id="inputCedula" value="">
+            <br>
+            <label for="labelNombre">Nombre: </label>
+            <input type="text" id="inputNombre" value="">
+            <br>
+            <label for="labelApellido">Apellido: </label>
+            <input type="text" id="inputApellido" value="">
+            <br>
+            <label for="labelEmail">Email: </label>
+            <input type="text" id="inputEmail" value="">
+            <br>
+            <label for="labelDomicilio">Domicilio: </label>
+            <input type="text" id="inputDomicilio" value="">
+            <br>
+            <label for="labeltelefono">Telefono: </label>
+            <input type="text" id="inputTelefono" value="">
+            <br>
+            <label for="labelListEmpresas">Empresas: </label>
+            <select name="" id="listaEmpresas"></select>
             <input type="button" value="Add Company" onclick="addDatosLista()">
-        </div>
-        <div class="input-group mb-3">
-            <label for="labelListEmpresas">Nombre: </label>
-            <ul id="aquiidLista">
-            </ul>
-        </div>
+            <div>
+                <label for="labelListEmpresas">Nombre: </label>
+                <br>
+                <ul id="aquiidLista">
+                </ul>
+            </div>
+
         </div>
         <br>
-        <div class="input-group">
+        <div class="styleDivbuttorn">
             <input type="button" value="Save" onclick="saveRepresentante()">
             <input type="button" value="Delete" onclick="">
         </div>
-        <div class="input-group">
-            <textarea name="" class="form-control form-control-lg" type="text" placeholder="NOTIFICACION" id="idNotification" cols="30" rows="5"></textarea>
+        <div>
+            <textarea name="" id="idNotification" cols="30" rows="5"></textarea>
         </div>
     </div>
 </body>

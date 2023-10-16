@@ -105,64 +105,17 @@ function init() {
     wsConnect();
 }
 function wsConnect() {
-    /*
-    const socketio = io.connect('ws://localhost:3000',{forceNew:true});
-    socketio.on('message',function(data){
-        console.log('Accede a primer io')
+
+    const socket = io.connect('http://localhost:3000/', { forceNet: true });
+    socket.on('messageClient', (data) => {
         console.log(data)
+        // Accedemos mensaje a TextAres de html
+        let textArea = document.getElementById("idNotification");
+        // Agregamso mensaje
+        textArea.innerHTML = data + "\n";
     })
-    */
-    const socket = new WebSocket('ws://localhost:3000');//Create object
-    // Funciones de callback  que son las funciones que va a invocar el navegador cuando detecte un evento relacionado con los websocket del server
-    // Funcionan de manera sincrona no espera q llege sms del server si q apenas llega notifica y evita bloqueos lo q permite seguir interactuando
-    socket.onopen = function (evt) { 
-        //alert("Conexio establecida..."); 
-        // Invacamos funcion externa a estar dentro de ws
-        onOpen(evt);
-    }
-    socket.onclose = function (evt) { 
-        //alert("Conexion cerrada.. "); 
-        onClose(evt);
-    }
-    socket.onmessage = function (evt) { 
-        //alert("Mensaje recibido... " + evt.data); 
-        onMessage(evt);
-    }
-    socket.onerror = function(evt){
-        onError(evt);
-    }
-}
-// Implemntamos funciones de callback
-// Se ejecuta cuando se establece la conexión Websocket con el servidor y esta a la escucha del server
-function onOpen(evt) {
-    // Habilitamos el botón Enviar
-    //document.getElementById("enviar").disabled = false;
-    // Enviamos el saludo inicial al servidor
-    console.log('Ingresa envio ce mensaje a servidor')
-    doSend("Saludo de cliente WebSocket a servidor");
-}
-function onClose(){
-    //Acciones a realizar cuando se cierra la conexxion
-    //document.getElementById("idcomponenteHtmls").disabled = true;
-    document.getElementById("idNotification").innerHTML="";
-}
-// Captura mensaje enviado por el servidor
-function onMessage(evt){
-    // Accedemos mensaje a TextAres de html
-    var textArea = document.getElementById("idNotification");
-    // Agregamso mensaje
-    textArea.innerHTML = evt.data + "\n";
-}
-//Control de mensajes de error
-function onError(evt){
-    console.log("Error del servidor")
-    console.log(evt)
-}
-// Funcion para envio de mensajes 
-function doSend(mensaje){
-    socket.send(mensaje);
 }
 // Conexion a socker se debe realizar una vez cargada la pagina
-window.addEventListener("load",init,false);
+window.addEventListener("load", init, false);
 
 /***************************** FIN WEBSOCKER *************************************/
