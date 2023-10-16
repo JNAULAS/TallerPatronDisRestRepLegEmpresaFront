@@ -105,7 +105,14 @@ function init() {
     wsConnect();
 }
 function wsConnect() {
-    const socket = new WebSocket('ws://localhost:5500');//Create object
+    /*
+    const socketio = io.connect('ws://localhost:3000',{forceNew:true});
+    socketio.on('message',function(data){
+        console.log('Accede a primer io')
+        console.log(data)
+    })
+    */
+    const socket = new WebSocket('ws://localhost:3000');//Create object
     // Funciones de callback  que son las funciones que va a invocar el navegador cuando detecte un evento relacionado con los websocket del server
     // Funcionan de manera sincrona no espera q llege sms del server si q apenas llega notifica y evita bloqueos lo q permite seguir interactuando
     socket.onopen = function (evt) { 
@@ -153,7 +160,7 @@ function onError(evt){
 }
 // Funcion para envio de mensajes 
 function doSend(mensaje){
-    websocket.send(mensaje);
+    socket.send(mensaje);
 }
 // Conexion a socker se debe realizar una vez cargada la pagina
 window.addEventListener("load",init,false);

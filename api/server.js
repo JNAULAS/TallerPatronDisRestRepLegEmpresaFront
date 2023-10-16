@@ -21,7 +21,8 @@ const path = require("path")
 const server = require('http').Server(app);
 const websocket = require('socket.io')(server);
 app.use(express.json)
-app.use(express.static(path.join(__dirname, './public')));
+//app.use(express.static(path.join(__dirname, './public')));
+app.use(express.static('public'));
 
 // Intanciamos objeto y realizamos control de conexiones
 /* const instWebSocket = new WebSocket({
