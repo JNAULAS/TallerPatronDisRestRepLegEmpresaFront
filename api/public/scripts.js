@@ -37,7 +37,7 @@ async function getListCompany() {
     });
 }
 // funtion para agregar Item Seleccionado a lista
-let listaEmpresasSave=[]
+let listaEmpresasSave = []
 function addDatosLista() {
     const listaEmpresas = document.getElementById("listaEmpresas");
     const itemSelect = document.getElementById("itemListEmpresa");
@@ -57,7 +57,9 @@ function addDatosLista() {
         listaEmpresasSave.push(param)
     }
 }
-function handleCancelar(){
+function handleCancelar() {
+    var ulElement = document.getElementById("itemListEmpresa");
+    ulElement.innerHTML = "";
     listaEmpresasSave.pop()
 }
 
@@ -73,10 +75,45 @@ async function saveRepresentante() {
     const paramDomicilio = document.getElementById('inputDomicilio').value
     const paramTelefono = document.getElementById('inputTelefono').value
     var listItemFront = document.getElementById("listaEmpresas").value
-    // Construimos Json para persistir
-    const listParamSave =[]
+    // Control de ingreso de informcion
+    if (paramRuc == '') {
+        alert('Ingrese un número de RUC válido.')
+        return false
+    }
+    if (paramCedula == '') {
+        alert('Ingrese un número de Cedula válido.')
+        return false
+    }
+    if (paramNombre == '') {
+        alert('Ingrese un nombre válido.')
+        return false
+    }
+    if (paramApellido == '') {
+        alert('Ingrese un apellido válido.')
+        return false
+    }
+    if (paramEmail == '') {
+        alert('Ingrese una dirección de correo válido.')
+        return false
+    }
+    if (paramDomicilio == '') {
+        alert('Ingrese una dirección de domicilio válido.')
+        return false
+    }
+    if (paramTelefono == '') {
+        alert('Ingrese un número de Teléfono válido.')
+        return false
+    }
+    if (listaEmpresasSave.length == 0) {
+        alert('Empresas no seleccionadas, selecciones por lo menos una empresa.')
+        return false
+    }
 
-    listaEmpresasSave.forEach(emp=> {
+
+    // Construimos Json para persistir
+    const listParamSave = []
+
+    listaEmpresasSave.forEach(emp => {
         const param = {
             empresa: emp.codigo
         }
