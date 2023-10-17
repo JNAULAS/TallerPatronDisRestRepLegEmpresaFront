@@ -17,7 +17,7 @@ function obtenerRepresentante(paramRuc) {
                 path: 'empresa',
                 populate: {
                     path: 'empresa',
-                    model: 'empresa'
+                    model: 'EMPRESA_DTO'
                 }
             })
             .exec()
