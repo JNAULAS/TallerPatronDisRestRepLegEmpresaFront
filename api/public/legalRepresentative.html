@@ -10,48 +10,41 @@
 </head>
 <body>
     <div class="styleDivForm">
-        <h1>Legal representative parameterization</h1>
         <div class="styleDivInput">
+            <h1>Legal representative parameterization</h1>
             <label for="labelRuc">Ruc: </label>
-            <input type="text" id="inputRuc" value="">
-            <br>
+            <input type="text" class="input" id="inputRuc" value="">
             <label for="labelCedula">Cedula: </label>
-            <input type="text" id="inputCedula" value="">
-            <br>
+            <input type="text" class="input" id="inputCedula" value="">
             <label for="labelNombre">Nombre: </label>
-            <input type="text" id="inputNombre" value="">
-            <br>
+            <input type="text" class="input" id="inputNombre" value="">
             <label for="labelApellido">Apellido: </label>
-            <input type="text" id="inputApellido" value="">
-            <br>
+            <input type="text" class="input" id="inputApellido" value="">
             <label for="labelEmail">Email: </label>
-            <input type="text" id="inputEmail" value="">
-            <br>
+            <input type="text" class="input" id="inputEmail" value="">
             <label for="labelDomicilio">Domicilio: </label>
-            <input type="text" id="inputDomicilio" value="">
-            <br>
+            <input type="text" class="input" id="inputDomicilio" value="">
             <label for="labeltelefono">Telefono: </label>
-            <input type="text" id="inputTelefono" value="">
-            <br>
+            <input type="text" class="input" id="inputTelefono" value="">   
             <label for="labelListEmpresas">Empresas: </label>
             <select name="" id="listaEmpresas"></select>
-            <input type="button" value="Add Company" onclick="addDatosLista()">
+            <input type="button"  value="Add Company" onclick="addDatosLista()">
             <div>
-                <label for="labelListEmpresas">Nombre: </label>
+                <label for="labelListEmpresas" class="label">Empresa Seleccionada </label>
                 <br>
                 <ul id="itemListEmpresa">
                 </ul>
             </div>
-
+            <br>
+            <div class="">
+                <input type="button" class="btn success" value="Save" onclick="saveRepresentante()">
+                <input type="button" class="btn warning" value="Cancelar" onclick="handleCancelar()">
+            </div>
+            <div>
+                <textarea name="" class="input" id="idNotification" cols="30" rows="8"></textarea>
+            </div>
         </div>
-        <br>
-        <div class="styleDivbuttorn">
-            <input type="button" value="Save" onclick="saveRepresentante()">
-            <input type="button" value="Cancelar" onclick="handleCancelar()">
-        </div>
-        <div>
-            <textarea name="" id="idNotification" cols="30" rows="5"></textarea>
-        </div>
+        
     </div>
 </body>
 </html>
